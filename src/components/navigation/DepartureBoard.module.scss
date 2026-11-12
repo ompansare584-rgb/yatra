@@ -1,0 +1,136 @@
+@use "../../styles/mixins" as *;
+
+.board {
+  --focus: var(--amber);
+
+  background: var(--board);
+  color: var(--board-ink);
+  border: 3px solid var(--brass);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 5px var(--board),
+    0 18px 34px var(--shadow);
+  overflow: hidden;
+  perspective: 800px;
+}
+
+.head,
+.columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  @include label;
+}
+
+.head {
+  color: var(--board-ink);
+  background: var(--board-tile);
+  border-bottom: 1px solid var(--board-line);
+}
+
+.columns {
+  display: none;
+  color: var(--board-dim);
+  padding-block: 0.5rem;
+
+  @include up(md) {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.remarkHead {
+  text-align: left;
+}
+
+.rows {
+  display: block;
+
+  li + li {
+    border-top: 1px solid var(--board-line);
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  grid-template-areas:
+    "plat dest"
+    "plat remark";
+  column-gap: 0.75rem;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: 0.55rem 1rem;
+  color: var(--board-ink);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--board-tile);
+    text-decoration: none;
+  }
+
+  @include up(md) {
+    grid-template-columns: 4.5rem 1fr 1fr;
+    grid-template-areas: "plat dest remark";
+    column-gap: 1rem;
+    min-height: 3rem;
+  }
+}
+
+.active {
+  background: var(--board-tile);
+  box-shadow: inset 4px 0 0 var(--amber);
+}
+
+.platform {
+  grid-area: plat;
+  font-family: var(--font-label);
+  font-size: 1.35rem;
+  color: var(--amber);
+}
+
+.destination {
+  grid-area: dest;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.remark {
+  grid-area: remark;
+  color: var(--board-dim);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.75rem;
+}
+
+.here {
+  color: var(--amber);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+// Split-flap tiles. Words never break in the middle; lines wrap between words.
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.char {
+  display: inline-block;
+  min-width: 0.78em;
+  margin-right: 1px;
+  text-align: center;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--board-tile) 49%, #12100d 49%, #12100d 51%, var(--board-tile) 51%);
+  transform-origin: 50% 50%;
+}

@@ -1,0 +1,317 @@
+@use "../../styles/mixins" as *;
+
+// ---- Station 01: The Origin ----------------------------------------------------
+.originGrid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 3.5rem;
+  }
+}
+
+.prose {
+  display: grid;
+  gap: 1.1rem;
+  justify-items: start;
+  max-width: var(--measure);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.9rem 1.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+
+  dt {
+    color: var(--ink-muted);
+    @include label;
+
+    font-size: 0.75rem;
+  }
+
+  dd {
+    font-weight: 600;
+  }
+}
+
+.note {
+  padding-left: 1rem;
+  border-left: 3px solid var(--brass);
+  color: var(--ink-muted);
+}
+
+.ticketWrap {
+  padding-block: 0.5rem;
+
+  @include up(lg) {
+    padding-top: 1rem;
+  }
+}
+
+.milestones {
+  margin-top: clamp(2rem, 6vh, 3.5rem);
+}
+
+.milestonesTitle {
+  margin-bottom: 0.9rem;
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+  font-family: var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.milestoneList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+// A small rubber-stamp style card.
+.stamp {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.75rem 1.1rem;
+  border: 2px dashed var(--red);
+  border-radius: var(--radius);
+  color: var(--red);
+  transform: rotate(-0.8deg);
+}
+
+.stampTitle {
+  font-family: var(--font-label);
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stampMeta {
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+}
+
+// ---- Station 02: Interests ---------------------------------------------------------
+.destinations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+}
+
+.destination {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: 3rem 1.25rem 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 14px var(--shadow);
+
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  p:last-child {
+    color: var(--ink-muted);
+  }
+}
+
+// Station-name plate across the top of each card.
+.destinationSign {
+  position: absolute;
+  inset: 0 0 auto;
+  padding: 0.4rem 1.25rem;
+  background: var(--green);
+  color: var(--on-green);
+  border-radius: var(--radius) var(--radius) 0 0;
+  @include label;
+}
+
+.empty {
+  max-width: var(--measure);
+  padding: 1.25rem 1.5rem;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius);
+}
+
+// ---- Station 03: Workshop ------------------------------------------------------------
+.toolGroups {
+  display: grid;
+  gap: 2rem;
+}
+
+.toolGroupTitle {
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.toolList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tool {
+  display: grid;
+  padding: 0.55rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--brass);
+  border-radius: var(--radius);
+  font-weight: 600;
+
+  small {
+    color: var(--ink-muted);
+    font-weight: 400;
+    font-size: 0.875rem;
+  }
+}
+
+// ---- Station 04: Project log -----------------------------------------------------------
+.emptyPlatform {
+  max-width: 40rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--paper);
+  border: 2px dashed var(--rule);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  line-height: 1.35;
+}
+
+.projects {
+  display: grid;
+  gap: 2rem;
+}
+
+.project {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 6px solid var(--red-plate);
+  border-radius: var(--radius);
+
+  header {
+    display: grid;
+    gap: 0.5rem;
+  }
+}
+
+.projectStatus {
+  color: var(--red);
+  @include label;
+}
+
+.caseStudy {
+  display: grid;
+  gap: 1rem;
+
+  @include up(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  dt {
+    color: var(--ink-muted);
+    @include label;
+
+    font-size: 0.75rem;
+  }
+}
+
+.screenshot {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.projectLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+// ---- Station 06: The Next Stop -----------------------------------------------------------
+.terminus {
+  padding-bottom: clamp(5rem, 14vh, 8rem);
+}
+
+.terminusGrid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+}
+
+.closing {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.4vw, 2rem);
+  line-height: 1.3;
+}
+
+.cta {
+  color: var(--ink-muted);
+}
+
+.linkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.formTitle {
+  margin-bottom: 1rem;
+}
+
+// Yellow safety line along the platform edge.
+.platformEdge {
+  position: absolute;
+  inset: auto 0 0;
+  height: 16px;
+  background: repeating-linear-gradient(135deg, var(--amber) 0 14px, #1e1b18 14px 28px);
+  opacity: 0.85;
+}
+
+// ---- Footer ------------------------------------------------------------------------------------
+.footer {
+  padding-block: 2rem 2.5rem;
+  background: var(--board);
+  color: var(--board-dim);
+  font-size: 0.9375rem;
+
+  :global(.container) {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  a {
+    color: var(--board-ink);
+  }
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}

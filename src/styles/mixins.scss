@@ -1,0 +1,46 @@
+// Pure helpers (no CSS output on their own). Import with:  @use "../../styles/mixins" as *;
+@use "sass:map";
+
+$breakpoints: (
+  sm: 36em,
+  md: 48em,
+  lg: 64em,
+  xl: 80em,
+);
+
+/// Mobile-first: styles apply from this width upwards.
+@mixin up($key) {
+  @media (min-width: map.get($breakpoints, $key)) {
+    @content;
+  }
+}
+
+/// Short laptop screens (for example 1366 × 650): tighten vertical spacing.
+@mixin short {
+  @media (min-width: 48em) and (max-height: 46em) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/// Small typewriter-style technical label.
+@mixin label {
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/// Enamel signboard plate: red, cream lettering, brass keyline.
+@mixin enamel-plate {
+  background: var(--red-plate);
+  color: var(--on-red);
+  border: 2px solid var(--brass);
+  box-shadow:
+    0 0 0 3px var(--red-plate),
+    0 6px 14px var(--shadow);
+}

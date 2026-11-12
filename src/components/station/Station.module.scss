@@ -1,0 +1,53 @@
+@use "../../styles/mixins" as *;
+
+.station {
+  position: relative;
+  padding-block: clamp(3rem, 9vh, 6rem);
+  border-top: 1px solid var(--rule);
+}
+
+.head {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  margin-bottom: clamp(1.75rem, 5vh, 3rem);
+}
+
+// Enamel signboard: "01 | WHO I AM"
+.signboard {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.5rem;
+  @include enamel-plate;
+  @include label;
+}
+
+.number {
+  font-size: 1.1rem;
+  color: var(--amber);
+}
+
+.sep {
+  align-self: stretch;
+  width: 2px;
+  background: var(--brass);
+}
+
+.remark {
+  font-size: 0.8125rem;
+}
+
+.intro {
+  max-width: var(--measure);
+  color: var(--ink-muted);
+  font-size: 1.125rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+}

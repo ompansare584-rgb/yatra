@@ -1,0 +1,60 @@
+@use "../../styles/mixins" as *;
+
+.form {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 34rem;
+  justify-items: start;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+
+  label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.8rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 2px solid var(--ink-muted);
+    border-radius: var(--radius);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  [aria-invalid="true"] {
+    border-color: var(--red);
+  }
+}
+
+.error {
+  color: var(--red);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.success {
+  color: var(--green-text);
+  font-weight: 600;
+}
+
+// Visually hidden but still in the form for bots.
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

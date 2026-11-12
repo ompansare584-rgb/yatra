@@ -1,0 +1,77 @@
+@use "../../styles/mixins" as *;
+
+.wrap {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hint {
+  max-width: var(--measure);
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+}
+
+.status {
+  min-height: 1.5em;
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+}
+
+.group {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  width: 100%;
+}
+
+.list {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+
+.repo {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+
+  h4 {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+
+  span {
+    padding: 0.1rem 0.55rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 0.8125rem;
+  }
+}

@@ -1,0 +1,87 @@
+// Design tokens as CSS custom properties. Imported once, from globals.scss.
+// Palette: parchment, enamel red, railway green, brass, soot, signal amber.
+
+:root {
+  color-scheme: light dark;
+
+  // Surfaces
+  --parchment: #f3ebda;
+  --paper: #fbf6ea;
+  --rule: #cdbfa3;
+
+  // Text
+  --ink: #1e1b18;
+  --ink-muted: #5a5248;
+
+  // Colour roles
+  --red: #a3281e; // red used as text / links
+  --red-plate: #a3281e; // red used as a filled signboard
+  --on-red: #fff8ec;
+  --green: #1f4d3a;
+  --green-text: #1f4d3a;
+  --on-green: #f3ebda;
+  --brass: #a8812f;
+  --brass-text: #7a5a12;
+  --amber: #e7a622;
+
+  // Departure board (stays dark in both themes, like a real one)
+  --board: #1b1814;
+  --board-tile: #26211b;
+  --board-ink: #f2b63d;
+  --board-dim: #cdbb8a;
+  --board-line: #3a332a;
+
+  // Landscape interlude
+  --sky-top: #cfe0dc;
+  --sky-bottom: #f6e3be;
+  --land-far: #b9ad8e;
+  --land-mid: #6e7f5f;
+  --land-near: #1f4d3a;
+
+  --focus: #1f4d3a;
+  --shadow: rgb(30 27 24 / 18%);
+  --grain-opacity: 0.07;
+
+  // Fonts (the --font-* variables are injected by next/font in layout.tsx)
+  --font-display: var(--font-rozha), "Noto Serif Devanagari", Georgia, serif;
+  --font-body: var(--font-hind), "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-label: var(--font-elite), "Courier New", monospace;
+
+  --gutter: 1.25rem;
+  --radius: 6px;
+  --measure: 62ch;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --parchment: #14120f;
+    --paper: #1d1a15;
+    --rule: #3b352b;
+
+    --ink: #f0e7d3;
+    --ink-muted: #b7ab92;
+
+    --red: #e8705f;
+    --red-plate: #a3281e;
+    --green-text: #7dbe9b;
+    --brass: #c9a24a;
+    --brass-text: #d8b45f;
+
+    --sky-top: #10151c;
+    --sky-bottom: #3a2a22;
+    --land-far: #3a3a33;
+    --land-mid: #26382e;
+    --land-near: #14241c;
+
+    --focus: #f2b63d;
+    --shadow: rgb(0 0 0 / 45%);
+    --grain-opacity: 0.1;
+  }
+}
+
+@media (min-width: 64em) {
+  :root {
+    // Room on the left for the route rail.
+    --gutter: 4.5rem;
+  }
+}
