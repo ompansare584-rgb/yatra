@@ -8,7 +8,8 @@ import RouteRail from "@/components/navigation/RouteRail";
 import { buildMetadata } from "@/lib/metadata";
 import "./globals.scss";
 
-// Fonts are self-hosted by next/font at build time. Devanagari is included for the few Marathi details.
+// Fonts are self-hosted by next/font at build time. Only the display face carries Devanagari
+// (for the few Marathi details), so the body font downloads Latin only.
 const rozha = Rozha_One({
   weight: "400",
   subsets: ["latin", "devanagari"],
@@ -17,7 +18,7 @@ const rozha = Rozha_One({
 });
 const hind = Hind({
   weight: ["400", "600"],
-  subsets: ["latin", "devanagari"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-hind",
 });
@@ -33,11 +34,8 @@ export const metadata = buildMetadata();
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F3EBDA" },
-    { media: "(prefers-color-scheme: dark)", color: "#14120F" },
-  ],
+  colorScheme: "light",
+  themeColor: "#12356B",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

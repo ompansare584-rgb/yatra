@@ -8,7 +8,7 @@ import s from "./Sections.module.scss";
 /** The final platform. `formUrl` is resolved on the server (src/lib/server-env.ts); "" hides the form. */
 export default function NextStop({ formUrl }: { formUrl: string }) {
   return (
-    <Station id="next-stop" className={s.terminus}>
+    <Station id="next-stop" tone="midnight" className={s.terminus}>
       <div className={s.terminusGrid}>
         <div className={s.prose} data-reveal>
           <p className={s.closing}>{siteConfig.closingMessage}</p>

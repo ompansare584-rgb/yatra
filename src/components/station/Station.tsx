@@ -2,23 +2,37 @@ import clsx from "clsx";
 import { getStation } from "@/lib/stations";
 import s from "./Station.module.scss";
 
+/** Time of day for the section's colours. Defined in src/styles/tokens.scss. */
+export type Tone = "morning" | "noon" | "afternoon" | "dusk" | "night" | "midnight";
+
 interface Props {
   /** One of the ids in src/content/stations.ts */
   id: string;
+  tone: Tone;
   /** Short line under the heading. Optional. */
   intro?: string;
   children: React.ReactNode;
   className?: string;
 }
 
-/** The shared "platform" frame every station uses: signboard, heading, content. */
-export default function Station({ id, intro, children, className }: Props) {
+/** The shared "platform" frame every station uses: nameboard, heading, content. */
+export default function Station({ id, tone, intro, children, className }: Props) {
   const station = getStation(id);
   const titleId = `${id}-title`;
   return (
-    <section id={id} data-station={id} tabIndex={-1} aria-labelledby={titleId} className={clsx(s.station, className)}>
+    <section
+      id={id}
+      data-station={id}
+      data-tone={tone}
+      tabIndex={-1}
+      aria-labelledby={titleId}
+      className={clsx(s.station, className)}
+    >
       <div className="container">
         <header className={s.head} data-reveal>
+          <span className={s.numeral} aria-hidden="true">
+            {station.platform}
+          </span>
           <p className={s.signboard}>
             <span className="sr-only">Station </span>
             <span className={s.number}>{station.platform}</span>

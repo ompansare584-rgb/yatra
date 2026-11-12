@@ -56,7 +56,7 @@ export default function LandscapeInterlude() {
   }, []);
 
   return (
-    <div ref={rootRef} className={s.interlude} aria-hidden="true">
+    <div ref={rootRef} className={s.interlude} data-tone="afternoon" aria-hidden="true">
       <div className="container">
         <div className={s.window}>
           <div className={s.glass}>

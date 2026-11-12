@@ -26,26 +26,25 @@ export default function LandscapeShader() {
 
     const start = async () => {
       try {
-        const THREE = await import("three");
+        const { WebGLRenderer, PlaneGeometry, ShaderMaterial, Scene, Mesh, Camera, Vector2 } = await import("three");
         if (cancelled) return;
 
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "low-power" });
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const dark = window.matchMedia("(prefers-color-scheme: dark)").matches ? 1 : 0;
-        const material = new THREE.ShaderMaterial({
+        const renderer = new WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "low-power" });
+        const geometry = new PlaneGeometry(2, 2);
+        const material = new ShaderMaterial({
           vertexShader,
           fragmentShader,
           uniforms: {
             uTime: { value: 0 },
-            uRes: { value: new THREE.Vector2(1, 1) },
-            uDark: { value: dark },
+            uRes: { value: new Vector2(1, 1) },
+            uDark: { value: 0 },
           },
           depthTest: false,
           depthWrite: false,
         });
-        const scene = new THREE.Scene();
-        scene.add(new THREE.Mesh(geometry, material));
-        const camera = new THREE.Camera();
+        const scene = new Scene();
+        scene.add(new Mesh(geometry, material));
+        const camera = new Camera();
 
         // A fraction of the real pixel density: the sky is soft, so nobody can tell.
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1) * 0.6);

@@ -1,4 +1,4 @@
-// Base typography. Display = Rozha One, body = Hind, labels = Special Elite (sparingly).
+// Base typography. Display = Rozha One (also supplies Devanagari), body = Hind, labels = Special Elite.
 
 body {
   font-family: var(--font-body);
@@ -6,6 +6,11 @@ body {
   line-height: 1.65;
   font-weight: 400;
   color: var(--ink);
+}
+
+// Marathi / Devanagari details always use the display face (it carries the glyphs).
+:lang(mr) {
+  font-family: var(--font-display);
 }
 
 h1,
@@ -21,7 +26,7 @@ h4 {
 }
 
 h2 {
-  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  font-size: clamp(2rem, 5vw, 3.25rem);
 }
 
 h3 {
@@ -34,7 +39,7 @@ p {
 }
 
 a {
-  color: var(--red);
+  color: var(--link);
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
 }
@@ -51,5 +56,5 @@ a:hover {
 
 ::selection {
   background: var(--amber);
-  color: #1e1b18;
+  color: #0b1a36;
 }

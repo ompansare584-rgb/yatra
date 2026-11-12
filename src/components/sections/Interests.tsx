@@ -1,5 +1,6 @@
 import { siteConfig } from "@/content/site";
 import Station from "@/components/station/Station";
+import Icon from "@/components/ui/Icon";
 import s from "./Sections.module.scss";
 
 export default function Interests() {
@@ -8,6 +9,7 @@ export default function Interests() {
   return (
     <Station
       id="interests"
+      tone="noon"
       intro="Areas I am curious about. These are interests — not a list of skills or a claim of expertise."
     >
       {interests.length === 0 ? (
@@ -16,7 +18,12 @@ export default function Interests() {
         <ul className={s.destinations}>
           {interests.map((interest) => (
             <li key={interest.title} className={s.destination} data-reveal>
-              <p className={s.destinationSign}>{interest.group}</p>
+              <div className={s.destinationTop}>
+                <span className={s.iconWrap}>
+                  <Icon name={interest.group} />
+                </span>
+                <p className={s.destinationSign}>{interest.group}</p>
+              </div>
               <h3>{interest.title}</h3>
               <p>{interest.description}</p>
             </li>

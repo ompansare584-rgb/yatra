@@ -1,38 +1,45 @@
 @use "../../styles/mixins" as *;
 
 .board {
-  --focus: var(--amber);
+  --board: #0b1a36;
+  --board-tile: #14284f;
+  --board-ink: #ffc857;
+  --board-dim: #b9c6e0;
+  --board-line: #24396b;
+  --focus: #ffc857;
 
   background: var(--board);
   color: var(--board-ink);
-  border: 3px solid var(--brass);
-  border-radius: 10px;
-  box-shadow:
-    0 0 0 5px var(--board),
-    0 18px 34px var(--shadow);
+  border: 3px solid var(--amber);
+  border-radius: 14px;
+  box-shadow: 0 18px 34px rgb(5 12 30 / 45%);
   overflow: hidden;
   perspective: 800px;
 }
 
-.head,
-.columns {
+// Yellow header strip, like the top of a real departures board.
+.head {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.6rem 1rem;
+  padding: 0.55rem 1rem;
+  background: var(--amber);
+  color: var(--navy-deep);
   @include label;
-}
 
-.head {
-  color: var(--board-ink);
-  background: var(--board-tile);
-  border-bottom: 1px solid var(--board-line);
+  span:last-child {
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 1rem;
+  }
 }
 
 .columns {
   display: none;
+  padding: 0.5rem 1rem;
   color: var(--board-dim);
-  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--board-line);
+  @include label;
 
   @include up(md) {
     display: grid;
@@ -83,14 +90,15 @@
 
 .active {
   background: var(--board-tile);
-  box-shadow: inset 4px 0 0 var(--amber);
+  box-shadow: inset 5px 0 0 var(--saffron);
 }
 
 .platform {
   grid-area: plat;
-  font-family: var(--font-label);
-  font-size: 1.35rem;
-  color: var(--amber);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--saffron);
 }
 
 .destination {
@@ -102,17 +110,17 @@
 
 .remark {
   grid-area: remark;
-  color: var(--board-dim);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.15rem 0.75rem;
+  color: var(--board-dim);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
 }
 
 .here {
-  color: var(--amber);
+  color: var(--saffron);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -131,6 +139,6 @@
   margin-right: 1px;
   text-align: center;
   border-radius: 2px;
-  background: linear-gradient(to bottom, var(--board-tile) 49%, #12100d 49%, #12100d 51%, var(--board-tile) 51%);
+  background: linear-gradient(to bottom, var(--board-tile) 49%, #060f22 49%, #060f22 51%, var(--board-tile) 51%);
   transform-origin: 50% 50%;
 }

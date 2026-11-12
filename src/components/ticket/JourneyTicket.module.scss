@@ -1,78 +1,87 @@
 @use "../../styles/mixins" as *;
 
+// The ticket keeps its own cream-and-navy colours so it looks the same in any section.
 .ticket {
-  --notch: 11px;
+  --notch: 12px;
 
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  background: var(--paper);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 10px;
-  box-shadow: 0 14px 28px var(--shadow);
+  background: #fffaf0;
+  color: #17233b;
+  border: 3px solid var(--navy-deep);
+  border-radius: 14px;
+  box-shadow:
+    8px 8px 0 var(--amber),
+    0 18px 30px var(--shadow);
   transition: transform 0.25s ease;
-
-  // Ticket-stub notches on the left and right edges.
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: calc(var(--notch) * 2);
-    height: calc(var(--notch) * 2);
-    margin-top: calc(var(--notch) * -1);
-    border-radius: 50%;
-    background: var(--parchment);
-    border: 2px solid var(--ink);
-    display: none;
-  }
-
-  &::before {
-    left: calc(var(--notch) * -1 - 1px);
-  }
-
-  &::after {
-    right: calc(var(--notch) * -1 - 1px);
-  }
 
   @media (hover: hover) {
     &:hover {
-      transform: translateY(-3px) rotate(-0.4deg);
+      transform: translate(-2px, -3px) rotate(-0.5deg);
     }
   }
 
   @include up(md) {
     grid-template-columns: 1fr auto 10.5rem;
 
+    // Half-circle notches punched out of the top and bottom of the tear line.
     &::before,
     &::after {
-      display: none;
+      content: "";
+      position: absolute;
+      right: calc(10.5rem - var(--notch) - 1px);
+      z-index: 2;
+      width: calc(var(--notch) * 2);
+      height: calc(var(--notch) * 2);
+      background: var(--bg-edge);
+      border: 3px solid var(--navy-deep);
+      border-radius: 50%;
+    }
+
+    &::before {
+      top: calc(var(--notch) * -1 - 2px);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      bottom: calc(var(--notch) * -1 - 2px);
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(45deg);
     }
   }
 }
 
 .main {
-  padding: 1.25rem 1.25rem 1rem;
+  position: relative;
+  padding: 0 0 1rem;
 
   @include up(md) {
-    padding: 1.5rem 1.75rem;
+    padding-bottom: 1.5rem;
   }
 }
 
+// Vermilion header band.
 .kicker {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding-bottom: 0.6rem;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--red-plate);
-  color: var(--red);
+  margin-bottom: 1.1rem;
+  padding: 0.55rem 1.25rem;
+  background: var(--vermilion);
+  color: #fff8ec;
+  border-radius: 10px 10px 0 0;
   @include label;
+
+  @include up(md) {
+    padding-inline: 1.75rem;
+  }
 }
 
 .marathi {
-  font-family: var(--font-display);
   letter-spacing: 0;
   text-transform: none;
   font-size: 1rem;
@@ -82,13 +91,18 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem 1.25rem;
+  padding-inline: 1.25rem;
+
+  @include up(md) {
+    padding-inline: 1.75rem;
+  }
 }
 
 .field {
   min-width: 0;
 
   dt {
-    color: var(--ink-muted);
+    color: #485670;
     @include label;
 
     font-size: 0.75rem;
@@ -100,7 +114,7 @@
     overflow-wrap: anywhere;
   }
 
-  // Passenger and the longer lines get the full width.
+  // Passenger and the longer lines get the full width on small screens.
   &:first-child,
   &:nth-child(4),
   &:nth-child(5) {
@@ -113,23 +127,41 @@
 
   &:first-child dd {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 400;
   }
+}
+
+// Rubber stamp
+.stamp {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.9rem;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 3px double var(--vermilion);
+  border-radius: 50%;
+  color: var(--vermilion);
+  font-size: 1.25rem;
+  opacity: 0.55;
+  transform: rotate(-14deg);
+  pointer-events: none;
 }
 
 // Dashed tear line.
 .perforation {
   height: 0;
   margin-inline: 1.25rem;
-  border-top: 2px dashed var(--rule);
+  border-top: 3px dashed #cdb887;
 
   @include up(md) {
     width: 0;
     height: auto;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
     border-top: 0;
-    border-left: 2px dashed var(--rule);
+    border-left: 3px dashed #cdb887;
   }
 }
 
@@ -164,11 +196,11 @@
   flex: none;
   width: 6rem;
   height: 6rem;
-  border: 3px solid var(--brass);
+  border: 3px solid var(--saffron);
   border-radius: 50%;
   font-family: var(--font-display);
   font-size: 2rem;
-  color: var(--red);
+  color: var(--vermilion);
 
   @include up(md) {
     width: 8.75rem;
@@ -181,8 +213,14 @@
   flex: 1;
   align-self: stretch;
   min-height: 2.25rem;
-  background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 11px);
-  opacity: 0.8;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--navy-deep) 0 2px,
+    transparent 2px 5px,
+    var(--navy-deep) 5px 6px,
+    transparent 6px 11px
+  );
+  opacity: 0.85;
 
   @include up(md) {
     flex: none;

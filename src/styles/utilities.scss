@@ -18,14 +18,15 @@
   left: 0.75rem;
   z-index: 100;
   padding: 0.75rem 1.1rem;
-  background: var(--ink);
-  color: var(--parchment);
+  background: var(--navy-deep);
+  color: var(--cream);
   font-weight: 600;
   text-decoration: none;
   border-radius: var(--radius);
   transform: translateY(-200%);
 
   &:focus-visible {
+    outline-color: var(--amber);
     transform: none;
   }
 }
@@ -40,24 +41,24 @@
 .label {
   @include label;
 
-  color: var(--ink-muted);
+  color: var(--muted);
 }
 
-// Buttons -------------------------------------------------------------------
+// Buttons (colours come from the current tone) ---------------------------------------------
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   min-height: 2.75rem;
-  padding: 0.6rem 1.25rem;
+  padding: 0.6rem 1.3rem;
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
   border: 2px solid var(--ink);
-  border-radius: var(--radius);
+  border-radius: 999px;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -67,9 +68,9 @@
     color 0.15s ease;
 
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     background: var(--ink);
-    color: var(--parchment);
+    color: var(--bg-edge);
     text-decoration: none;
   }
 
@@ -81,18 +82,18 @@
 }
 
 .btn-primary {
-  background: var(--red-plate);
-  border-color: var(--red-plate);
-  color: var(--on-red);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 
   &:hover {
     background: var(--ink);
     border-color: var(--ink);
-    color: var(--parchment);
+    color: var(--bg-edge);
   }
 }
 
-// Motion ----------------------------------------------------------------------
+// Motion ----------------------------------------------------------------------------------------
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;

@@ -41,6 +41,10 @@ export default function JourneyTicket() {
             </div>
           ))}
         </dl>
+        {/* A rubber stamp: purely decorative. */}
+        <span className={s.stamp} lang="mr" aria-hidden="true">
+          यात्रा
+        </span>
       </div>
 
       <div className={s.perforation} aria-hidden="true" />

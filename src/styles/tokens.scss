@@ -1,82 +1,32 @@
 // Design tokens as CSS custom properties. Imported once, from globals.scss.
-// Palette: parchment, enamel red, railway green, brass, soot, signal amber.
+//
+// THE IDEA: the page is one day's journey. Each station has a "tone" (time of day):
+// dawn (opening screen) -> morning -> noon -> afternoon -> dusk -> night -> midnight.
+// A section picks its tone with data-tone="..." and every component simply uses the
+// variables below (--bg, --ink, --muted, --surface, --line, --link, --accent ...).
+//
+// To change the colours of the whole site, edit the palette and the tones here.
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
-  // Surfaces
-  --parchment: #f3ebda;
-  --paper: #fbf6ea;
-  --rule: #cdbfa3;
-
-  // Text
-  --ink: #1e1b18;
-  --ink-muted: #5a5248;
-
-  // Colour roles
-  --red: #a3281e; // red used as text / links
-  --red-plate: #a3281e; // red used as a filled signboard
-  --on-red: #fff8ec;
-  --green: #1f4d3a;
-  --green-text: #1f4d3a;
-  --on-green: #f3ebda;
-  --brass: #a8812f;
-  --brass-text: #7a5a12;
-  --amber: #e7a622;
-
-  // Departure board (stays dark in both themes, like a real one)
-  --board: #1b1814;
-  --board-tile: #26211b;
-  --board-ink: #f2b63d;
-  --board-dim: #cdbb8a;
-  --board-line: #3a332a;
-
-  // Landscape interlude
-  --sky-top: #cfe0dc;
-  --sky-bottom: #f6e3be;
-  --land-far: #b9ad8e;
-  --land-mid: #6e7f5f;
-  --land-near: #1f4d3a;
-
-  --focus: #1f4d3a;
-  --shadow: rgb(30 27 24 / 18%);
-  --grain-opacity: 0.07;
+  // Palette
+  --navy: #12356b; // Indian Railways blue
+  --navy-deep: #0b1a36;
+  --cream: #fff3dc;
+  --saffron: #f59e1b;
+  --amber: #ffc857; // signal lamp / station nameboard yellow
+  --vermilion: #c73a24;
 
   // Fonts (the --font-* variables are injected by next/font in layout.tsx)
   --font-display: var(--font-rozha), "Noto Serif Devanagari", Georgia, serif;
-  --font-body: var(--font-hind), "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-body: var(--font-hind), system-ui, sans-serif;
   --font-label: var(--font-elite), "Courier New", monospace;
 
   --gutter: 1.25rem;
-  --radius: 6px;
+  --radius: 10px;
   --measure: 62ch;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --parchment: #14120f;
-    --paper: #1d1a15;
-    --rule: #3b352b;
-
-    --ink: #f0e7d3;
-    --ink-muted: #b7ab92;
-
-    --red: #e8705f;
-    --red-plate: #a3281e;
-    --green-text: #7dbe9b;
-    --brass: #c9a24a;
-    --brass-text: #d8b45f;
-
-    --sky-top: #10151c;
-    --sky-bottom: #3a2a22;
-    --land-far: #3a3a33;
-    --land-mid: #26382e;
-    --land-near: #14241c;
-
-    --focus: #f2b63d;
-    --shadow: rgb(0 0 0 / 45%);
-    --grain-opacity: 0.1;
-  }
+  --shadow: rgb(11 26 54 / 22%);
 }
 
 @media (min-width: 64em) {
@@ -84,4 +34,89 @@
     // Room on the left for the route rail.
     --gutter: 4.5rem;
   }
+}
+
+// ---- Tones ---------------------------------------------------------------------------
+// --bg        section background (may be a gradient)
+// --bg-edge   a solid colour matching the TOP of --bg (used by the hill silhouette edge)
+// --surface   cards and fields   --line  hairlines   --muted  secondary text
+// --link      link colour        --accent / --on-accent  filled buttons and plates
+
+:root,
+[data-tone="morning"] {
+  --bg: #fff3dc;
+  --bg-edge: #fff3dc;
+  --surface: #fffaf0;
+  --ink: #17233b;
+  --muted: #485670;
+  --line: #ebd7ae;
+  --link: #b83420;
+  --accent: #c73a24;
+  --on-accent: #fff8ec;
+  --focus: #12356b;
+}
+
+[data-tone="noon"] {
+  --bg: #dff1ee;
+  --bg-edge: #dff1ee;
+  --surface: #f6fcfb;
+  --ink: #0e2a33;
+  --muted: #3b565e;
+  --line: #b4d9d3;
+  --link: #0b5e57;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --focus: #0e2a33;
+}
+
+[data-tone="afternoon"] {
+  --bg: #fce1a8;
+  --bg-edge: #fce1a8;
+  --surface: #fff3d1;
+  --ink: #2b1b0a;
+  --muted: #59401e;
+  --line: #e2bb66;
+  --link: #8e2412;
+  --accent: #a52d17;
+  --on-accent: #ffffff;
+  --focus: #2b1b0a;
+}
+
+[data-tone="dusk"] {
+  --bg: linear-gradient(to bottom, #7e2f36 0, #1f2e57 14rem, #1f2e57 100%);
+  --bg-edge: #7e2f36;
+  --surface: #2a3b6d;
+  --ink: #fff3dc;
+  --muted: #c9d2ea;
+  --line: #46598f;
+  --link: #ffc857;
+  --accent: #f59e1b;
+  --on-accent: #0b1a36;
+  --focus: #ffc857;
+}
+
+[data-tone="night"] {
+  --bg: #12234a;
+  --bg-edge: #12234a;
+  --surface: #1b3166;
+  --ink: #fff3dc;
+  --muted: #bfcbe6;
+  --line: #34508f;
+  --link: #ffc857;
+  --accent: #f59e1b;
+  --on-accent: #0b1a36;
+  --focus: #ffc857;
+}
+
+[data-tone="midnight"] {
+  --bg: #0a1430;
+  --bg-edge: #0a1430;
+  --surface: #14244f;
+  --ink: #fff3dc;
+  --muted: #bfcbe6;
+  --line: #2a407a;
+  --link: #ffc857;
+  --accent: #f59e1b;
+  --on-accent: #0b1a36;
+  --focus: #ffc857;
 }

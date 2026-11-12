@@ -26,10 +26,10 @@
   width: 100%;
   margin-top: 0.5rem;
   padding-top: 1.1rem;
-  border-top: 1px solid var(--rule);
+  border-top: 2px solid var(--line);
 
   dt {
-    color: var(--ink-muted);
+    color: var(--muted);
     @include label;
 
     font-size: 0.75rem;
@@ -42,12 +42,12 @@
 
 .note {
   padding-left: 1rem;
-  border-left: 3px solid var(--brass);
-  color: var(--ink-muted);
+  border-left: 4px solid var(--saffron);
+  color: var(--muted);
 }
 
 .ticketWrap {
-  padding-block: 0.5rem;
+  padding: 0.5rem 8px 8px 0;
 
   @include up(lg) {
     padding-top: 1rem;
@@ -55,14 +55,14 @@
 }
 
 .milestones {
-  margin-top: clamp(2rem, 6vh, 3.5rem);
+  margin-top: clamp(2.25rem, 6vh, 3.5rem);
 }
 
 .milestonesTitle {
   margin-bottom: 0.9rem;
-  font-size: 1.15rem;
-  color: var(--ink-muted);
+  color: var(--muted);
   font-family: var(--font-label);
+  font-size: 1rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -73,26 +73,38 @@
   gap: 1rem;
 }
 
-// A small rubber-stamp style card.
-.stamp {
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.75rem 1.1rem;
-  border: 2px dashed var(--red);
-  border-radius: var(--radius);
-  color: var(--red);
-  transform: rotate(-0.8deg);
+// A small award card with a medal.
+.medal {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1.25rem 0.85rem 0.85rem;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 999px 14px 14px 999px;
+  box-shadow: 5px 5px 0 var(--saffron);
 }
 
-.stampTitle {
+.medalIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--amber);
+  color: var(--navy-deep);
+}
+
+.medalTitle {
   font-family: var(--font-label);
   font-size: 1rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.stampMeta {
-  color: var(--ink-muted);
+.medalMeta {
+  color: var(--muted);
   font-size: 0.9375rem;
 }
 
@@ -103,43 +115,62 @@
   gap: 1.25rem;
 }
 
+// Each interest is a destination card: icon, group label, title.
 .destination {
-  position: relative;
   display: grid;
   align-content: start;
-  gap: 0.6rem;
-  padding: 3rem 1.25rem 1.25rem;
-  background: var(--paper);
-  border: 1px solid var(--rule);
+  gap: 0.7rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-top: 8px solid var(--accent);
   border-radius: var(--radius);
-  box-shadow: 0 6px 14px var(--shadow);
+  box-shadow: 6px 6px 0 var(--line);
+  transition: transform 0.2s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
 
   h3 {
     font-size: 1.35rem;
   }
 
   p:last-child {
-    color: var(--ink-muted);
+    color: var(--muted);
   }
 }
 
-// Station-name plate across the top of each card.
+.destinationTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
 .destinationSign {
-  position: absolute;
-  inset: 0 0 auto;
-  padding: 0.4rem 1.25rem;
-  background: var(--green);
-  color: var(--on-green);
-  border-radius: var(--radius) var(--radius) 0 0;
+  color: var(--muted);
   @include label;
 }
 
 .empty {
   max-width: var(--measure);
   padding: 1.25rem 1.5rem;
-  color: var(--ink-muted);
-  background: var(--paper);
-  border: 1px dashed var(--rule);
+  color: var(--muted);
+  background: var(--surface);
+  border: 2px dashed var(--line);
   border-radius: var(--radius);
 }
 
@@ -160,17 +191,17 @@
   gap: 0.75rem;
 }
 
+// Luggage-tag style labels.
 .tool {
   display: grid;
-  padding: 0.55rem 1rem;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--brass);
-  border-radius: var(--radius);
+  padding: 0.55rem 1.1rem 0.55rem 1.5rem;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 4px 999px 999px 4px;
   font-weight: 600;
 
   small {
-    color: var(--ink-muted);
+    color: var(--muted);
     font-weight: 400;
     font-size: 0.875rem;
   }
@@ -178,14 +209,23 @@
 
 // ---- Station 04: Project log -----------------------------------------------------------
 .emptyPlatform {
-  max-width: 40rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  background: var(--paper);
-  border: 2px dashed var(--rule);
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  max-width: 44rem;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  background: var(--surface);
+  border: 2px dashed var(--line);
   border-radius: var(--radius);
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 3vw, 1.6rem);
   line-height: 1.35;
+}
+
+.signal {
+  flex: none;
+  width: clamp(3rem, 8vw, 4.5rem);
+  height: auto;
 }
 
 .projects {
@@ -197,9 +237,9 @@
   display: grid;
   gap: 1.25rem;
   padding: clamp(1.25rem, 3vw, 2rem);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-top: 6px solid var(--red-plate);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-top: 8px solid var(--accent);
   border-radius: var(--radius);
 
   header {
@@ -209,7 +249,7 @@
 }
 
 .projectStatus {
-  color: var(--red);
+  color: var(--link);
   @include label;
 }
 
@@ -222,7 +262,7 @@
   }
 
   dt {
-    color: var(--ink-muted);
+    color: var(--muted);
     @include label;
 
     font-size: 0.75rem;
@@ -232,7 +272,7 @@
 .screenshot {
   width: 100%;
   height: auto;
-  border: 1px solid var(--rule);
+  border: 2px solid var(--line);
   border-radius: var(--radius);
 }
 
@@ -242,9 +282,21 @@
   gap: 0.75rem;
 }
 
-// ---- Station 06: The Next Stop -----------------------------------------------------------
-.terminus {
-  padding-bottom: clamp(5rem, 14vh, 8rem);
+// ---- Station 06: The Next Stop (midnight platform) ------------------------------------------
+// `section.terminus` is more specific than `.station`, so the stars are never overridden.
+section.terminus {
+  padding-bottom: clamp(5.5rem, 14vh, 8rem);
+  // A handful of static stars: plain gradients, no images, no animation.
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff3dc, transparent),
+    radial-gradient(1.5px 1.5px at 27% 62%, #fff3dc, transparent),
+    radial-gradient(2px 2px at 41% 12%, #ffc857, transparent),
+    radial-gradient(1.5px 1.5px at 58% 40%, #fff3dc, transparent),
+    radial-gradient(1.5px 1.5px at 73% 14%, #fff3dc, transparent),
+    radial-gradient(2px 2px at 86% 52%, #ffc857, transparent),
+    radial-gradient(1.5px 1.5px at 93% 22%, #fff3dc, transparent),
+    radial-gradient(1.5px 1.5px at 6% 78%, #fff3dc, transparent),
+    var(--bg);
 }
 
 .terminusGrid {
@@ -260,12 +312,12 @@
 
 .closing {
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3.4vw, 2rem);
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
   line-height: 1.3;
 }
 
 .cta {
-  color: var(--ink-muted);
+  color: var(--muted);
 }
 
 .linkRow {
@@ -282,16 +334,15 @@
 .platformEdge {
   position: absolute;
   inset: auto 0 0;
-  height: 16px;
-  background: repeating-linear-gradient(135deg, var(--amber) 0 14px, #1e1b18 14px 28px);
-  opacity: 0.85;
+  height: 18px;
+  background: repeating-linear-gradient(135deg, var(--amber) 0 14px, #0b1a36 14px 28px);
 }
 
 // ---- Footer ------------------------------------------------------------------------------------
 .footer {
   padding-block: 2rem 2.5rem;
-  background: var(--board);
-  color: var(--board-dim);
+  background: #070e22;
+  color: #bfcbe6;
   font-size: 0.9375rem;
 
   :global(.container) {
@@ -300,7 +351,7 @@
   }
 
   a {
-    color: var(--board-ink);
+    color: var(--amber);
   }
 }
 

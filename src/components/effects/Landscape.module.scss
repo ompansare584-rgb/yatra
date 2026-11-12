@@ -1,21 +1,31 @@
 @use "../../styles/mixins" as *;
 
+// Golden hour. Same tone as the Workshop that follows, so the two melt into one another.
 .interlude {
-  padding-block: clamp(2rem, 6vh, 4rem);
-  border-top: 1px solid var(--rule);
+  --sky-top: #5ba4c8;
+  --sky-bottom: #ffd59a;
+  --land-far: #a7b79b;
+  --land-mid: #5e8a68;
+  --land-near: #1f5a4b;
+
+  padding-block: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vh, 2rem);
+  background: var(--bg);
+
+  @include hill-edge;
 }
 
-// The train window: brass frame, glass, a centre mullion and a sill.
+// The train window: navy frame with a saffron trim, glass, a centre mullion.
 .window {
   position: relative;
   max-width: 64rem;
   margin-inline: auto;
-  padding: 0.75rem;
-  background: var(--brass);
-  border-radius: 28px 28px 10px 10px;
+  padding: 0.85rem;
+  background: var(--navy);
+  border-radius: 32px 32px 12px 12px;
   box-shadow:
-    inset 0 0 0 3px var(--ink),
-    0 14px 28px var(--shadow);
+    inset 0 0 0 3px var(--navy-deep),
+    0 0 0 4px var(--saffron),
+    0 18px 32px var(--shadow);
 }
 
 .glass {
@@ -23,20 +33,20 @@
   // Height follows the viewport as well as the width, so it works on short laptop screens.
   height: clamp(10rem, 30vh, 18rem);
   overflow: hidden;
-  border-radius: 20px 20px 4px 4px;
+  border-radius: 22px 22px 6px 6px;
   background: linear-gradient(to top, var(--sky-bottom), var(--sky-top));
-  box-shadow: inset 0 0 0 3px var(--ink);
+  box-shadow: inset 0 0 0 3px var(--navy-deep);
 }
 
 .mullion {
   position: absolute;
-  inset: 0.75rem auto 0.75rem 50%;
-  width: 10px;
-  margin-left: -5px;
-  background: var(--brass);
+  inset: 0.85rem auto 0.85rem 50%;
+  width: 12px;
+  margin-left: -6px;
+  background: var(--navy);
   box-shadow:
-    -2px 0 0 var(--ink),
-    2px 0 0 var(--ink);
+    -2px 0 0 var(--navy-deep),
+    2px 0 0 var(--navy-deep);
   pointer-events: none;
 }
 
@@ -69,13 +79,13 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 0 4px rgb(231 166 34 / 30%);
+  background: var(--vermilion);
+  box-shadow: 0 0 0 4px rgb(199 58 36 / 30%);
 }
 
 .caption {
-  margin-top: 0.9rem;
+  margin-top: 1rem;
   text-align: center;
-  color: var(--ink-muted);
+  color: var(--muted);
   @include label;
 }

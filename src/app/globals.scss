@@ -16,20 +16,9 @@ html {
 body {
   margin: 0;
   min-height: 100svh;
-  background-color: var(--parchment);
+  background-color: #070e22; // shows only if a section fails to paint; the footer is this colour
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
-}
-
-// Fine paper grain: a tiny tiled SVG file (see public/textures/grain.svg), not a data URI.
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: url("/textures/grain.svg") 0 0 / 200px 200px;
-  opacity: var(--grain-opacity);
 }
 
 img,

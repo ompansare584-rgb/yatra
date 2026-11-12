@@ -14,13 +14,13 @@
 
 .hint {
   max-width: var(--measure);
-  color: var(--ink-muted);
+  color: var(--muted);
   font-size: 0.9375rem;
 }
 
 .status {
   min-height: 1.5em;
-  color: var(--ink-muted);
+  color: var(--muted);
   font-size: 0.9375rem;
 }
 
@@ -43,9 +43,9 @@
   align-content: start;
   gap: 0.5rem;
   padding: 1rem 1.1rem;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--green);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--accent);
   border-radius: var(--radius);
 
   h4 {
@@ -57,7 +57,7 @@
   }
 
   p {
-    color: var(--ink-muted);
+    color: var(--muted);
     font-size: 0.9375rem;
   }
 }
@@ -69,7 +69,7 @@
 
   span {
     padding: 0.1rem 0.55rem;
-    border: 1px solid var(--rule);
+    border: 2px solid var(--line);
     border-radius: 999px;
     color: var(--ink);
     font-size: 0.8125rem;

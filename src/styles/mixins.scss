@@ -15,16 +15,11 @@ $breakpoints: (
   }
 }
 
-/// Short laptop screens (for example 1366 × 650): tighten vertical spacing.
+/// Short laptop screens (for example 1366 x 650): tighten vertical spacing.
 @mixin short {
   @media (min-width: 48em) and (max-height: 46em) {
     @content;
   }
-}
-
-@mixin focus-ring {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
 }
 
 /// Small typewriter-style technical label.
@@ -35,12 +30,32 @@ $breakpoints: (
   text-transform: uppercase;
 }
 
-/// Enamel signboard plate: red, cream lettering, brass keyline.
-@mixin enamel-plate {
-  background: var(--red-plate);
-  color: var(--on-red);
-  border: 2px solid var(--brass);
+/// Station nameboard: signal-yellow plate, navy lettering, navy keyline (like a real platform sign).
+@mixin station-plate {
+  background: var(--amber);
+  color: var(--navy-deep);
+  border: 3px solid var(--navy-deep);
+  border-radius: 4px;
   box-shadow:
-    0 0 0 3px var(--red-plate),
-    0 6px 14px var(--shadow);
+    0 0 0 2px var(--amber),
+    0 8px 16px var(--shadow);
+}
+
+/// Rolling-hills silhouette along the TOP edge of a section, in that section's own colour,
+/// so one time of day melts into the next. Static CSS mask: no JavaScript, no per-frame cost.
+@mixin hill-edge {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -47px;
+    right: 0;
+    left: 0;
+    height: 48px;
+    background: var(--bg-edge);
+    pointer-events: none;
+    -webkit-mask: url("/textures/hills.svg") bottom / 1200px 48px repeat-x;
+    mask: url("/textures/hills.svg") bottom / 1200px 48px repeat-x;
+  }
 }

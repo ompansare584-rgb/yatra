@@ -34,8 +34,8 @@ export const fragmentShader = /* glsl */ `
     vec2 p = vec2(vUv.x * aspect, vUv.y);
 
     // Sky gradient (warm horizon, cooler top). Colours follow the site palette.
-    vec3 topDay     = vec3(0.81, 0.88, 0.86);
-    vec3 horizonDay = vec3(0.96, 0.89, 0.75);
+    vec3 topDay     = vec3(0.36, 0.64, 0.78);
+    vec3 horizonDay = vec3(1.00, 0.84, 0.60);
     vec3 topNight     = vec3(0.063, 0.082, 0.110);
     vec3 horizonNight = vec3(0.227, 0.165, 0.133);
     vec3 top     = mix(topDay, topNight, uDark);
@@ -60,7 +60,7 @@ export const fragmentShader = /* glsl */ `
 
     // A hazy distant ridge on the horizon.
     float ridge = 0.30 + noise(p.x * 1.6 + drift * 0.8 + 21.0) * 0.10;
-    vec3 haze = mix(vec3(0.72, 0.68, 0.58), vec3(0.17, 0.17, 0.15), uDark);
+    vec3 haze = mix(vec3(0.65, 0.72, 0.61), vec3(0.17, 0.17, 0.15), uDark);
     col = mix(col, haze, 1.0 - smoothstep(ridge - 0.006, ridge + 0.006, vUv.y));
 
     gl_FragColor = vec4(col, 1.0);

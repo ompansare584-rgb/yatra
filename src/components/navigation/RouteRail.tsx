@@ -10,13 +10,15 @@ import s from "./RouteRail.module.scss";
 
 /**
  * The railway route that fills as you scroll.
- *  - Wide screens: a vertical rail of numbered station roundels (real links).
+ *  - Wide screens: a vertical rail of numbered station roundels with a little signal lamp
+ *    that travels from station to station.
  *  - Small screens: a thin progress bar along the top.
- * Active stations are marked even with reduced motion; only the scroll-linked fill is skipped.
+ * Active stations are marked even with reduced motion; only the scroll-linked movement is skipped.
  */
 export default function RouteRail() {
   const active = useActiveStation();
   const railFill = useRef<HTMLSpanElement>(null);
+  const lamp = useRef<HTMLSpanElement>(null);
   const barFill = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -27,22 +29,28 @@ export default function RouteRail() {
 
     loadGsap()
       .then(({ gsap, ScrollTrigger }) => {
-        if (cancelled || !railFill.current || !barFill.current) return;
+        const fill = railFill.current;
+        const lampEl = lamp.current;
+        const bar = barFill.current;
+        if (cancelled || !fill || !lampEl || !bar) return;
 
         const sections = stations
           .map((st) => document.getElementById(st.id))
           .filter((el): el is HTMLElement => el !== null);
         if (sections.length < 2) return;
 
-        const setRail = gsap.quickSetter(railFill.current, "scaleY") as (v: number) => void;
-        const setBar = gsap.quickSetter(barFill.current, "scaleX") as (v: number) => void;
+        const setFill = gsap.quickSetter(fill, "scaleY") as (v: number) => void;
+        const setLamp = gsap.quickSetter(lampEl, "y", "px") as (v: number) => void;
+        const setBar = gsap.quickSetter(bar, "scaleX") as (v: number) => void;
 
         let tops: number[] = [];
+        let trackHeight = 0;
         const measure = () => {
           tops = sections.map((el) => el.getBoundingClientRect().top + window.scrollY);
+          trackHeight = fill.parentElement?.clientHeight ?? 0;
         };
 
-        // 0 = first station, 1 = last station, interpolated between stations so the fill lines up with the roundels.
+        // 0 = first station, 1 = last station, interpolated between stations so it lines up with the roundels.
         const update = () => {
           const y = window.scrollY + window.innerHeight * 0.45;
           const last = tops.length - 1;
@@ -56,7 +64,8 @@ export default function RouteRail() {
               }
             }
           }
-          setRail(progress);
+          setFill(progress);
+          setLamp(progress * trackHeight);
           setBar(progress);
         };
 
@@ -93,6 +102,7 @@ export default function RouteRail() {
         <span className={s.track} aria-hidden="true">
           <span ref={railFill} className={s.fill} />
         </span>
+        <span ref={lamp} className={s.lamp} aria-hidden="true" />
         <ol className={s.stops}>
           {stations.map((station) => {
             const isActive = active === station.id;

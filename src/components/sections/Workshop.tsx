@@ -9,6 +9,7 @@ export default function Workshop() {
   return (
     <Station
       id="workshop"
+      tone="afternoon"
       intro="Tools and concepts I genuinely use or am exploring, labelled by how far along I actually am."
     >
       {tools.length === 0 ? (

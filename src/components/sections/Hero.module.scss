@@ -1,27 +1,61 @@
 @use "../../styles/mixins" as *;
 
+// Dawn: this section sets its own colours (the tones in tokens.scss start after the junction).
 .hero {
+  --scene-h: clamp(10rem, 26vh, 17rem);
+  --ink: #fff3dc;
+  --muted: #c9d6ec;
+  --link: #ffc857;
+  --accent: #ffc857;
+  --on-accent: #0b1a36;
+  --bg-edge: #0f2540;
+  --focus: #ffc857;
+
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  // Height follows the content; min-height only makes the first screen feel complete.
   min-height: 100svh;
-  padding-block: clamp(1.5rem, 6vh, 3.5rem) clamp(2.5rem, 8vh, 4.5rem);
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(
+    to bottom,
+    #0f2540 0,
+    #1d4266 calc(100% - var(--scene-h) - 5rem),
+    #e8906a calc(100% - var(--scene-h) * 0.5),
+    #ffc97d 100%
+  );
+}
 
-  @include short {
-    padding-block: 1.25rem 2.25rem;
-  }
+// The giant Devanagari word for "journey".
+.watermark {
+  position: absolute;
+  top: 2vh;
+  right: -2vw;
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 30vw, 26rem);
+  line-height: 0.85;
+  color: rgb(255 243 220 / 7%);
+  pointer-events: none;
+  user-select: none;
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: grid;
+  flex: 1;
   gap: clamp(1.5rem, 4vh, 2.5rem);
+  align-content: center;
   align-items: center;
+  padding-block: clamp(1.5rem, 6vh, 3.5rem) clamp(1.5rem, 4vh, 2.5rem);
 
   @include up(lg) {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     gap: 3rem;
+  }
+
+  @include short {
+    padding-block: 1.25rem 1rem;
   }
 }
 
@@ -38,7 +72,7 @@
 .signboard {
   display: inline-flex;
   align-items: stretch;
-  @include enamel-plate;
+  @include station-plate;
   @include label;
 
   span {
@@ -47,24 +81,33 @@
 }
 
 .marathi {
-  border-left: 2px solid var(--brass);
-  font-family: var(--font-display);
+  border-left: 3px solid var(--navy-deep);
   letter-spacing: 0;
   text-transform: none;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .location {
-  color: var(--ink-muted);
+  color: var(--muted);
   @include label;
 }
 
 .title {
   margin-top: 0.25rem;
-  font-size: clamp(2.75rem, 8vw, 5.75rem);
+  font-size: clamp(3rem, 9vw, 6.25rem);
+
+  &::after {
+    content: "";
+    display: block;
+    width: 4.5rem;
+    height: 6px;
+    margin-top: 0.6rem;
+    background: var(--amber);
+    border-radius: 3px;
+  }
 
   @include short {
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
   }
 }
 
@@ -77,12 +120,12 @@
 
 .copy {
   max-width: var(--measure);
-  color: var(--ink-muted);
+  color: var(--muted);
 }
 
 .supporting {
   max-width: var(--measure);
-  color: var(--green-text);
+  color: var(--amber);
   font-style: italic;
 }
 
@@ -93,14 +136,15 @@
   margin-top: 0.5rem;
 }
 
-// Two rails and sleepers along the bottom edge of the opening screen.
-.track {
-  position: absolute;
-  inset: auto 0 0;
-  height: 14px;
-  opacity: 0.55;
-  background:
-    linear-gradient(var(--ink), var(--ink)) 0 2px / 100% 2px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) 0 10px / 100% 2px no-repeat,
-    repeating-linear-gradient(90deg, var(--brass) 0 5px, transparent 5px 24px) 0 0 / 100% 14px no-repeat;
+// Dawn over the viaduct. The sky gradient above continues behind this block.
+.scene {
+  position: relative;
+  z-index: 1;
+  height: var(--scene-h);
+  overflow: hidden;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 }

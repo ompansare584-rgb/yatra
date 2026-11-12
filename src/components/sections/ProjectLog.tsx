@@ -9,9 +9,17 @@ export default function ProjectLog() {
   const projects = publishedProjects();
 
   return (
-    <Station id="project-log">
+    <Station id="project-log" tone="dusk">
       {projects.length === 0 ? (
         <div className={s.emptyPlatform} data-reveal>
+          {/* A semaphore signal at "clear": the line is open, nothing to show yet. */}
+          <svg className={s.signal} viewBox="0 0 48 80" fill="none" aria-hidden="true" focusable="false">
+            <rect x="21" y="14" width="6" height="64" fill="currentColor" opacity="0.5" />
+            <g transform="rotate(-35 24 18)">
+              <rect x="6" y="12" width="36" height="10" rx="2" fill="#ffc857" stroke="currentColor" strokeWidth="2" />
+            </g>
+            <circle cx="24" cy="10" r="6" fill="#ffc857" />
+          </svg>
           <p>
             Every journey starts somewhere. This project log will grow as I build and document meaningful work.
           </p>

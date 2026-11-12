@@ -9,7 +9,7 @@ import s from "./Sections.module.scss";
 export default function Origin() {
   const resume = safeHttpUrl(siteConfig.resumeUrl);
   return (
-    <Station id="origin">
+    <Station id="origin" tone="morning">
       <div className={s.originGrid}>
         <div className={s.prose} data-reveal>
           {siteConfig.about.map((paragraph) => (

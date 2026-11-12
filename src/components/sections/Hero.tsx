@@ -1,6 +1,7 @@
 import { siteConfig } from "@/content/site";
 import DepartureBoard from "@/components/navigation/DepartureBoard";
 import ExternalLink from "@/components/ui/ExternalLink";
+import HeroScene from "./HeroScene";
 import s from "./Hero.module.scss";
 
 /** "Pune, Maharashtra, India" -> "PUNE, MAHARASHTRA · INDIA" */
@@ -8,10 +9,15 @@ function locationLabel(location: string) {
   return location.toUpperCase().replace(/, ([^,]+)$/, " · $1");
 }
 
-/** The opening screen: Om Pansare Junction. */
+/** The opening screen: Om Pansare Junction, at dawn. */
 export default function Hero() {
   return (
     <section id="junction" data-station="junction" tabIndex={-1} aria-labelledby="hero-title" className={s.hero}>
+      {/* Giant decorative "journey" in Devanagari behind the introduction */}
+      <span className={s.watermark} lang="mr" aria-hidden="true">
+        यात्रा
+      </span>
+
       <div className={`container ${s.inner}`}>
         <div className={s.intro}>
           <p className={s.signboard}>
@@ -41,7 +47,8 @@ export default function Hero() {
 
         <DepartureBoard />
       </div>
-      <div className={s.track} aria-hidden="true" />
+
+      <HeroScene />
     </section>
   );
 }

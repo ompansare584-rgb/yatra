@@ -1,3 +1,4 @@
+import Icon from "@/components/ui/Icon";
 import { has, publishedAchievements, safeHttpUrl } from "@/lib/content";
 import s from "./Sections.module.scss";
 
@@ -13,15 +14,20 @@ export default function Milestones() {
         {achievements.map((a) => {
           const proof = safeHttpUrl(a.proofUrl);
           return (
-            <li key={a.title} className={s.stamp}>
-              <p className={s.stampTitle}>{a.title}</p>
-              {has(a.date) ? <p className={s.stampMeta}>{a.date}</p> : null}
-              {has(a.description) ? <p className={s.stampMeta}>{a.description}</p> : null}
-              {proof ? (
-                <a href={proof} target="_blank" rel="noopener noreferrer">
-                  View proof<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              ) : null}
+            <li key={a.title} className={s.medal}>
+              <span className={s.medalIcon}>
+                <Icon name="Medal" />
+              </span>
+              <div>
+                <p className={s.medalTitle}>{a.title}</p>
+                {has(a.date) ? <p className={s.medalMeta}>{a.date}</p> : null}
+                {has(a.description) ? <p className={s.medalMeta}>{a.description}</p> : null}
+                {proof ? (
+                  <a href={proof} target="_blank" rel="noopener noreferrer">
+                    View proof<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : null}
+              </div>
             </li>
           );
         })}

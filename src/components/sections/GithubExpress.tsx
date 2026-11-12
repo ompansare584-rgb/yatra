@@ -9,7 +9,7 @@ export default function GithubExpress() {
   const username = githubUsername(siteConfig.links.github);
 
   return (
-    <Station id="github-express" intro="My public code, straight from GitHub whenever you ask for it.">
+    <Station id="github-express" tone="night" intro="My public code, straight from GitHub whenever you ask for it.">
       <div data-reveal>
         {username ? (
           <ErrorBoundary

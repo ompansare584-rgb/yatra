@@ -19,7 +19,11 @@ export function shouldSimplifyMotion(): boolean {
   return false;
 }
 
-/** The WebGL sky is only for wider screens that are allowed full motion. */
+/** The WebGL sky is only for wide screens with a capable device that are allowed full motion. */
 export function canUseShaderScene(): boolean {
-  return !shouldSimplifyMotion() && window.matchMedia("(min-width: 48em)").matches;
+  return (
+    !shouldSimplifyMotion() &&
+    window.matchMedia("(min-width: 64em)").matches &&
+    (navigator.hardwareConcurrency ?? 0) >= 4
+  );
 }
