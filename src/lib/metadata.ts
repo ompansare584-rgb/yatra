@@ -33,3 +33,15 @@ export function buildMetadata(): Metadata {
     robots: { index: true, follow: true },
   };
 }
+
+/** Metadata for the inner pages (/about, /projects, ...). Each page gets its own canonical URL. */
+export function pageMetadata({ title, description, path }: { title: string; description: string; path: string }): Metadata {
+  const full = `${title} · ${siteConfig.name}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { type: "website", url: path, siteName: `Yatra — ${siteConfig.name}`, title: full, description, locale: "en_IN" },
+    twitter: { card: "summary_large_image", title: full, description },
+  };
+}

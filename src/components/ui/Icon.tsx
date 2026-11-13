@@ -26,6 +26,17 @@ const ICONS: Record<string, React.ReactNode> = {
       <circle cx="17" cy="16" r="2.5" />
     </>
   ),
+  // Compass
+  Compass: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m15.5 8.5-2 5-5 2 2-5z" />
+    </>
+  ),
+  // Build: wrench
+  Build: <path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.4 2.4-2.6-.6-.6-2.6z" />,
+  // Pulse: a steady line
+  Pulse: <path d="M3 12h4l3-8 4 16 3-8h4" />,
   // Medal
   Medal: (
     <>

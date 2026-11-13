@@ -85,6 +85,9 @@ export interface SiteConfig {
   /** Paragraphs shown in Station 01 — The Origin */
   about: string[];
 
+  /** "How I work" cards on the About page. Keep them to things that are genuinely true of you. */
+  approach: Array<{ title: string; text: string; icon: string }>;
+
   /** Closing message in Station 06 */
   closingMessage: string;
 

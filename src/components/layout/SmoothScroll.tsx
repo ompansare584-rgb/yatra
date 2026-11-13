@@ -6,19 +6,22 @@ import { loadGsap } from "@/lib/gsap";
 
 /**
  * Progressive smooth-scroll enhancement with Lenis, driven by GSAP's ticker so that
- * ScrollTrigger and Lenis never compete. If anything fails — or the visitor prefers
- * reduced motion, has Save-Data on, or uses a low-power device — native scrolling stays untouched.
+ * ScrollTrigger and Lenis never compete. It only runs on desktop-class devices with a mouse,
+ * and only after the page has loaded and gone idle. Phones, reduced motion, Save-Data and
+ * low-power devices keep native scrolling and never download Lenis or GSAP for this.
  */
 export default function SmoothScroll() {
   useEffect(() => {
     if (shouldSimplifyMotion()) return;
+    if (!window.matchMedia("(min-width: 64em) and (pointer: fine)").matches) return;
 
     let cancelled = false;
     let cleanup: (() => void) | undefined;
 
     (async () => {
       try {
-        const [{ default: Lenis }, { gsap, ScrollTrigger }] = await Promise.all([import("lenis"), loadGsap()]);
+        const { gsap, ScrollTrigger } = await loadGsap();
+        const { default: Lenis } = await import("lenis");
         if (cancelled) return;
 
         const lenis = new Lenis({ lerp: 0.1 });
@@ -37,7 +40,7 @@ export default function SmoothScroll() {
           const target = id ? document.getElementById(id) : document.body;
           if (!target) return;
           event.preventDefault();
-          lenis.scrollTo(id ? target : 0, { offset: -16 });
+          lenis.scrollTo(id ? target : 0, { offset: -72 });
           history.replaceState(null, "", id ? `#${id}` : window.location.pathname);
           target.focus({ preventScroll: true });
         };

@@ -125,6 +125,30 @@ html.lenis body {
   overflow: hidden;
 }
 
+// Gentle section reveals with CSS scroll-driven animation: zero JavaScript.
+// Browsers without support (or with reduced motion) simply show everything.
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-reveal] {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 // Always show everything when printing.
 @media print {
   [data-reveal] {

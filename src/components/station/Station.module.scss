@@ -74,3 +74,18 @@
   color: var(--muted);
   font-size: 0.9375rem;
 }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--link);
+  font-weight: 600;
+}

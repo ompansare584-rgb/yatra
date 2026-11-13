@@ -50,6 +50,26 @@ export const siteConfig: SiteConfig = {
     "I am at the beginning of my engineering journey — learning, exploring, and working towards something meaningful. This site will grow as the work does.",
   ],
 
+  // --- About page: "How I work" -----------------------------------------------
+  // icon: "Compass" | "Build" | "Pulse" | "Technology" | "Design" | "Culture" | "Personal"
+  approach: [
+    {
+      icon: "Compass",
+      title: "Curious about how things work",
+      text: "I like understanding how technology works before I use it to build something useful.",
+    },
+    {
+      icon: "Build",
+      title: "Learning by building",
+      text: "I would rather learn by making things than by making claims about them.",
+    },
+    {
+      icon: "Pulse",
+      title: "Let the work speak",
+      text: "I prefer understated confidence. The work should speak louder than any announcement.",
+    },
+  ],
+
   // --- Station 06: The Next Stop ----------------------------------------------
   closingMessage:
     "The journey is ongoing. There is always another idea to explore, another problem to understand, and something new to build.",

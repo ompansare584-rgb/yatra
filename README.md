@@ -63,3 +63,17 @@ src/styles         tokens, mixins, typography, utilities
 - GitHub is contacted only after a visitor presses "Load public repositories".
 - The Content-Security-Policy ships as **report-only**; promote it to enforced after checking the deployed console.
 - Regenerate icons from `src/app/icon.svg` with `npm run icons`; rebuild the portrait with `npm run portrait <image>`.
+
+
+## Pages
+
+| Route | What it shows |
+| --- | --- |
+| `/` | The full journey (all six stations) |
+| `/about` | Intro, journey ticket, "How I like to work" (`approach` in `site.ts`), interests |
+| `/projects` | Project log: published projects only, honest empty state otherwise |
+| `/projects/<slug>` | One page per published project (set `published: true` in `site.ts`) |
+| `/github` | Public repositories, requested only when the visitor presses the button |
+| `/contact` | Closing message, LinkedIn/GitHub, and the form only if Formspree is configured |
+
+All text still comes from `src/content/site.ts`; the sitemap, `llms.txt` and breadcrumbs follow the same content.

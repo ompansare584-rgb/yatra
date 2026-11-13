@@ -142,3 +142,20 @@
   background: linear-gradient(to bottom, var(--board-tile) 49%, #060f22 49%, #060f22 51%, var(--board-tile) 51%);
   transform-origin: 50% 50%;
 }
+
+// Split-flap: each tile flips once when its row becomes the active station (CSS only).
+.flip {
+  animation: flap 0.28s ease-out both;
+}
+
+@keyframes flap {
+  from {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}

@@ -89,3 +89,24 @@
   color: var(--muted);
   @include label;
 }
+
+// Each layer slides sideways at its own speed (--shift) while the window scrolls past. No JavaScript.
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .interlude {
+      view-timeline: --land block;
+    }
+
+    .layer {
+      animation: land-slide linear both;
+      animation-timeline: --land;
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes land-slide {
+  to {
+    transform: translateX(var(--shift));
+  }
+}

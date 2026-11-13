@@ -1,0 +1,172 @@
+@use "../../styles/mixins" as *;
+
+// ---- Inner-page hero: dawn sky with a train on the track -----------------------------------------
+.hero {
+  --ink: #fff3dc;
+  --muted: #c9d6ec;
+  --link: #ffc857;
+  --accent: #ffc857;
+  --on-accent: #0b1a36;
+  --focus: #ffc857;
+
+  position: relative;
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(to bottom, #0f2540 0, #1d4266 70%, #e8906a 92%, #ffc97d 100%);
+}
+
+.watermark {
+  position: absolute;
+  top: 0;
+  right: -1vw;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 26vw, 22rem);
+  line-height: 0.9;
+  color: rgb(255 243 220 / 8%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  padding-block: clamp(2rem, 6vh, 3.5rem) clamp(7rem, 16vh, 9rem);
+}
+
+.crumbs {
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    font-size: 0.9375rem;
+  }
+
+  li:not(:last-child)::after {
+    content: "/";
+    margin-left: 0.5rem;
+    opacity: 0.6;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--ink);
+  }
+
+  [aria-current] {
+    color: var(--amber);
+    font-weight: 600;
+  }
+}
+
+.signboard {
+  display: inline-flex;
+  align-items: stretch;
+  @include station-plate;
+  @include label;
+
+  span {
+    padding: 0.4rem 0.9rem;
+  }
+}
+
+.marathi {
+  border-left: 3px solid var(--navy-deep);
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 1.05rem;
+}
+
+.title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.05;
+  text-shadow: 0 2px 0 rgb(11 26 54 / 35%);
+}
+
+.lead {
+  max-width: 40rem;
+  font-size: clamp(1.125rem, 2.4vw, 1.4rem);
+  color: var(--ink);
+}
+
+.train {
+  position: absolute;
+  right: clamp(0.5rem, 6vw, 6rem);
+  bottom: 12px;
+  width: clamp(14rem, 34vw, 24rem);
+  height: auto;
+}
+
+// Two rails and sleepers.
+.track {
+  position: absolute;
+  inset: auto 0 0;
+  height: 14px;
+  background:
+    linear-gradient(#0b1a36 0 3px, transparent 3px 8px, #0b1a36 8px 11px, transparent 11px),
+    repeating-linear-gradient(90deg, #5a3a1c 0 10px, transparent 10px 24px);
+}
+
+// ---- "Next stops" cards --------------------------------------------------------------------------
+.end {
+  padding-bottom: clamp(3.5rem, 10vh, 6rem);
+}
+
+.endTitle {
+  margin-bottom: 1.5rem;
+}
+
+.endGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+}
+
+.endCard {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+  height: 100%;
+  padding: 1.5rem 3.25rem 1.5rem 1.5rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-left: 10px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--line);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+}
+
+.endName {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+.endText {
+  color: var(--muted);
+}
+
+.endArrow {
+  position: absolute;
+  top: 50%;
+  right: 1.25rem;
+  translate: 0 -50%;
+  color: var(--accent);
+  font-size: 1.75rem;
+  font-weight: 600;
+}

@@ -7,7 +7,7 @@
   align-items: start;
 
   @include up(lg) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 3.5rem;
   }
 }
@@ -46,7 +46,9 @@
   color: var(--muted);
 }
 
+// The ticket's layout reacts to THIS box's width (container query), not the screen width.
 .ticketWrap {
+  container-type: inline-size;
   padding: 0.5rem 8px 8px 0;
 
   @include up(lg) {
@@ -282,6 +284,34 @@
   gap: 0.75rem;
 }
 
+.cardTitle {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--link);
+      text-decoration: underline;
+    }
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  span {
+    padding: 0.2rem 0.75rem;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+}
+
 // ---- Station 06: The Next Stop (midnight platform) ------------------------------------------
 // `section.terminus` is more specific than `.station`, so the stars are never overridden.
 section.terminus {
@@ -344,6 +374,8 @@ section.terminus {
   background: #070e22;
   color: #bfcbe6;
   font-size: 0.9375rem;
+  border-top: 14px solid transparent;
+  border-image: repeating-linear-gradient(135deg, #ffc857 0 14px, #0b1a36 14px 28px) 14;
 
   :global(.container) {
     display: grid;
@@ -365,4 +397,48 @@ section.terminus {
     align-items: center;
     min-height: 2.75rem;
   }
+}
+
+// ---- Inner pages: "How I work" cards ----------------------------------------------------------------
+.approach {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+}
+
+.ticketCard {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--saffron);
+
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  p {
+    color: var(--muted);
+  }
+}
+
+.cardIcon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--amber);
+}
+
+.noteBox {
+  max-width: var(--measure);
+  padding: 1rem 1.25rem;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
 }

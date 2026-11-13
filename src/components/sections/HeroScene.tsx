@@ -1,55 +1,20 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { shouldSimplifyMotion } from "@/lib/capabilities";
-import { loadGsap } from "@/lib/gsap";
 import s from "./Hero.module.scss";
 
 const PIERS = Array.from({ length: 16 }, (_, i) => i * 108 + 40);
 const COACHES = [0, 1, 2, 3, 4];
 
 /**
- * The opening scene: dawn over a viaduct. Pure SVG.
- * Scrolling is the journey — the sun climbs and the train pulls away as you leave the junction.
- * There is no idle animation: when you are not scrolling, nothing moves. With reduced motion the scene is still.
+ * The opening scene: dawn over a viaduct. Pure SVG, rendered on the server.
+ * Scrolling is the journey — a CSS scroll timeline (see Hero.module.scss) raises the sun and
+ * pulls the train away. No JavaScript, no idle animation; with reduced motion the scene is still.
  */
 export default function HeroScene() {
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    const hero = root?.closest("section");
-    if (!root || !hero || shouldSimplifyMotion()) return;
-
-    let cancelled = false;
-    let revert: (() => void) | undefined;
-
-    loadGsap()
-      .then(({ gsap }) => {
-        if (cancelled) return;
-        const ctx = gsap.context(() => {
-          const scrollTrigger = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
-          gsap.to("[data-train]", { x: 1000, ease: "none", scrollTrigger });
-          gsap.to("[data-sun]", { y: -75, ease: "none", scrollTrigger });
-        }, root);
-        revert = () => ctx.revert();
-      })
-      .catch(() => {
-        // GSAP failed to load: the scene simply stays still.
-      });
-
-    return () => {
-      cancelled = true;
-      revert?.();
-    };
-  }, []);
-
   return (
-    <div ref={rootRef} className={s.scene} aria-hidden="true">
+    <div className={s.scene} aria-hidden="true">
       <svg viewBox="0 0 1600 360" preserveAspectRatio="xMidYMax slice" focusable="false">
         {/* Sun, low on the horizon (starts partly hidden behind the hills) */}
         <g transform="translate(0 52)">
-          <g data-sun>
+          <g className={s.sun}>
             <circle cx="1130" cy="215" r="170" fill="#ffc857" opacity="0.1" />
             <circle cx="1130" cy="215" r="110" fill="#ffc857" opacity="0.22" />
             <circle cx="1130" cy="215" r="64" fill="#ffe3a0" />
@@ -73,7 +38,7 @@ export default function HeroScene() {
 
         {/* Train: coaches with lit windows, a small locomotive at the front (right) */}
         <g transform="translate(180 186)">
-          <g data-train>
+          <g className={s.train}>
             {COACHES.map((c) => (
               <g key={c} transform={`translate(${c * 150} 0)`}>
                 <rect x="0" y="22" width="142" height="46" rx="7" fill="#0b1a36" />

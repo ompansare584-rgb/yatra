@@ -1,19 +1,17 @@
 "use client";
 
 import clsx from "clsx";
-import { m } from "framer-motion";
 import { useState } from "react";
 import { stations } from "@/content/stations";
 import { useActiveStation } from "@/hooks/useActiveStation";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import s from "./DepartureBoard.module.scss";
 
 /**
- * Text that "flips" like a split-flap display each time `flipKey` changes.
- * The real text is always present in the HTML (screen-reader copy + visible tiles),
+ * Text shown as split-flap tiles. The flip is a plain CSS animation that plays each time `flipKey`
+ * changes — no animation library. The real text is always in the HTML (screen-reader copy + visible tiles),
  * so the board reads correctly with no JavaScript and no animation.
  */
-function Flap({ text, flipKey, animate }: { text: string; flipKey: number; animate: boolean }) {
+function Flap({ text, flipKey }: { text: string; flipKey: number }) {
   let index = 0;
   const words = text.split(" ");
   return (
@@ -25,18 +23,12 @@ function Flap({ text, flipKey, animate }: { text: string; flipKey: number; anima
             <span className={s.word}>
               {Array.from(word).map((char) => {
                 const i = index++;
-                return animate && flipKey > 0 ? (
-                  <m.span
+                return (
+                  <span
                     key={`${flipKey}-${i}`}
-                    className={s.char}
-                    initial={{ rotateX: -90, opacity: 0 }}
-                    animate={{ rotateX: 0, opacity: 1 }}
-                    transition={{ duration: 0.28, delay: i * 0.018, ease: "easeOut" }}
+                    className={clsx(s.char, flipKey > 0 && s.flip)}
+                    style={flipKey > 0 ? { animationDelay: `${i * 18}ms` } : undefined}
                   >
-                    {char}
-                  </m.span>
-                ) : (
-                  <span key={i} className={s.char}>
                     {char}
                   </span>
                 );
@@ -52,7 +44,6 @@ function Flap({ text, flipKey, animate }: { text: string; flipKey: number; anima
 
 export default function DepartureBoard() {
   const active = useActiveStation();
-  const reduceMotion = usePrefersReducedMotion();
 
   // Each time a station becomes the active one, its row "flips" once.
   const [previous, setPrevious] = useState<string | null>(null);
@@ -91,10 +82,10 @@ export default function DepartureBoard() {
                   {station.platform}
                 </span>
                 <span className={s.destination}>
-                  <Flap text={station.destination} flipKey={flipKey} animate={!reduceMotion} />
+                  <Flap text={station.destination} flipKey={flipKey} />
                 </span>
                 <span className={s.remark}>
-                  <Flap text={station.remark} flipKey={flipKey} animate={!reduceMotion} />
+                  <Flap text={station.remark} flipKey={flipKey} />
                   {isActive ? (
                     <span className={s.here} aria-hidden="true">
                       You are here

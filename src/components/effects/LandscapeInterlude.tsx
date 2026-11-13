@@ -1,13 +1,6 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
-import ErrorBoundary from "@/components/ui/ErrorBoundary";
-import { shouldSimplifyMotion } from "@/lib/capabilities";
-import { loadGsap } from "@/lib/gsap";
+import type { CSSProperties } from "react";
+import LandscapeShaderLoader from "./LandscapeShaderLoader";
 import s from "./Landscape.module.scss";
-
-const LandscapeShader = dynamic(() => import("./LandscapeShader"), { ssr: false });
 
 /** One hill silhouette that tiles seamlessly (same height at both ends). */
 const HILLS = {
@@ -16,69 +9,34 @@ const HILLS = {
   near: "M0 262 C160 240 300 244 440 258 S700 280 860 258 S1100 238 1250 258 S1500 276 1600 262 V300 H0 Z",
 };
 
+const shift = (percent: number) => ({ "--shift": `${percent}%` }) as CSSProperties;
+
 /**
  * The window-seat interlude between Station 02 and 03: a train window onto a layered landscape.
- * Purely decorative (aria-hidden). Each layer slides sideways at its own speed as the section
- * scrolls past; with reduced motion the scene is simply static.
+ * Purely decorative (aria-hidden) and rendered on the server. The layers slide sideways with a CSS
+ * scroll timeline (see Landscape.module.scss) — no JavaScript. With reduced motion the scene is still.
  */
 export default function LandscapeInterlude() {
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || shouldSimplifyMotion()) return;
-
-    let cancelled = false;
-    let revert: (() => void) | undefined;
-
-    loadGsap()
-      .then(({ gsap }) => {
-        if (cancelled) return;
-        const ctx = gsap.context(() => {
-          gsap.utils.toArray<HTMLElement>("[data-speed]").forEach((layer) => {
-            gsap.to(layer, {
-              xPercent: -Number(layer.dataset.speed),
-              ease: "none",
-              scrollTrigger: { trigger: root, start: "top bottom", end: "bottom top", scrub: true },
-            });
-          });
-        }, root);
-        revert = () => ctx.revert();
-      })
-      .catch(() => {
-        // GSAP failed to load: the landscape stays still.
-      });
-
-    return () => {
-      cancelled = true;
-      revert?.();
-    };
-  }, []);
-
   return (
-    <div ref={rootRef} className={s.interlude} data-tone="afternoon" aria-hidden="true">
+    <div className={s.interlude} data-tone="afternoon" aria-hidden="true">
       <div className="container">
         <div className={s.window}>
           <div className={s.glass}>
-            <ErrorBoundary>
-              <LandscapeShader />
-            </ErrorBoundary>
+            <LandscapeShaderLoader />
 
             {/* Layers are 160% wide so they can slide without ever showing an edge. */}
-            <svg className={s.layer} data-speed="8" viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
+            <svg className={s.layer} style={shift(-8)} viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
               <path d={HILLS.far} fill="var(--land-far)" />
             </svg>
-            <svg className={s.layer} data-speed="16" viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
+            <svg className={s.layer} style={shift(-16)} viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
               <path d={HILLS.mid} fill="var(--land-mid)" />
             </svg>
-            <svg className={s.layer} data-speed="30" viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
+            <svg className={s.layer} style={shift(-30)} viewBox="0 0 1600 300" preserveAspectRatio="none" focusable="false">
               <path d={HILLS.near} fill="var(--land-near)" />
               {/* Telegraph poles and wire along the nearest hill. */}
               <g stroke="var(--land-near)" strokeWidth="5" fill="none">
                 {[160, 480, 800, 1120, 1440].map((x) => (
-                  <g key={x}>
-                    <path d={`M${x} 262 V170 M${x - 16} 182 H${x + 16}`} />
-                  </g>
+                  <path key={x} d={`M${x} 262 V170 M${x - 16} 182 H${x + 16}`} />
                 ))}
                 <path strokeWidth="1.5" d="M160 182 Q320 206 480 182 T800 182 T1120 182 T1440 182" />
               </g>

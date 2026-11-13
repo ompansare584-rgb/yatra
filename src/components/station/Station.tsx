@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import { getStation } from "@/lib/stations";
 import s from "./Station.module.scss";
 
@@ -13,10 +14,14 @@ interface Props {
   intro?: string;
   children: React.ReactNode;
   className?: string;
+  /** A link to the full page for this station, e.g. { href: "/about", label: "Read more about me" }. */
+  more?: { href: string; label: string };
+  /** Show "↑ Departure board" (only meaningful on the home page). Default true. */
+  showBack?: boolean;
 }
 
 /** The shared "platform" frame every station uses: nameboard, heading, content. */
-export default function Station({ id, tone, intro, children, className }: Props) {
+export default function Station({ id, tone, intro, children, className, more, showBack = true }: Props) {
   const station = getStation(id);
   const titleId = `${id}-title`;
   return (
@@ -41,9 +46,21 @@ export default function Station({ id, tone, intro, children, className }: Props)
           </p>
           <h2 id={titleId}>{station.name}</h2>
           {intro ? <p className={s.intro}>{intro}</p> : null}
-          <a className={s.back} href="#junction">
-            <span aria-hidden="true">↑ </span>Departure board
-          </a>
+          {more || showBack ? (
+            <p className={s.links}>
+              {more ? (
+                <Link className={s.more} href={more.href}>
+                  {more.label}
+                  <span aria-hidden="true"> →</span>
+                </Link>
+              ) : null}
+              {showBack ? (
+                <a className={s.back} href="#junction">
+                  <span aria-hidden="true">↑ </span>Departure board
+                </a>
+              ) : null}
+            </p>
+          ) : null}
         </header>
         {children}
       </div>

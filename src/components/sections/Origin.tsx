@@ -1,15 +1,26 @@
 import { siteConfig } from "@/content/site";
 import Station from "@/components/station/Station";
 import JourneyTicket from "@/components/ticket/JourneyTicket";
+import TicketTilt from "@/components/ticket/TicketTilt";
 import ExternalLink from "@/components/ui/ExternalLink";
 import { has, safeHttpUrl } from "@/lib/content";
 import Milestones from "./Milestones";
 import s from "./Sections.module.scss";
 
+/** Home page version: the station frame plus a link to the full About page. */
 export default function Origin() {
+  return (
+    <Station id="origin" tone="morning" more={{ href: "/about", label: "More about me" }}>
+      <OriginContent />
+    </Station>
+  );
+}
+
+/** Intro text, facts, journey ticket and milestones. Shared by the home page and /about. */
+export function OriginContent() {
   const resume = safeHttpUrl(siteConfig.resumeUrl);
   return (
-    <Station id="origin" tone="morning">
+    <>
       <div className={s.originGrid}>
         <div className={s.prose} data-reveal>
           {siteConfig.about.map((paragraph) => (
@@ -50,11 +61,13 @@ export default function Origin() {
         </div>
 
         <div className={s.ticketWrap} data-reveal>
-          <JourneyTicket />
+          <TicketTilt>
+            <JourneyTicket />
+          </TicketTilt>
         </div>
       </div>
 
       <Milestones />
-    </Station>
+    </>
   );
 }

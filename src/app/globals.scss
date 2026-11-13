@@ -46,6 +46,13 @@ main {
 }
 
 [data-station] {
-  scroll-margin-top: 1rem;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
   outline: none;
+}
+
+// Smooth cross-fade between pages in browsers that support it (no JavaScript, skipped for reduced motion).
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }

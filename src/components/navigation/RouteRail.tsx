@@ -9,20 +9,20 @@ import { loadGsap } from "@/lib/gsap";
 import s from "./RouteRail.module.scss";
 
 /**
- * The railway route that fills as you scroll.
- *  - Wide screens: a vertical rail of numbered station roundels with a little signal lamp
- *    that travels from station to station.
- *  - Small screens: a thin progress bar along the top.
+ * The railway route that fills as you scroll (home page).
+ *  - Wide screens: a vertical rail of numbered station roundels with a little signal lamp that
+ *    travels from station to station (GSAP ScrollTrigger, loaded when idle).
+ *  - Small screens: a thin progress bar along the top, driven by a CSS scroll timeline (no JavaScript).
  * Active stations are marked even with reduced motion; only the scroll-linked movement is skipped.
  */
 export default function RouteRail() {
   const active = useActiveStation();
   const railFill = useRef<HTMLSpanElement>(null);
   const lamp = useRef<HTMLSpanElement>(null);
-  const barFill = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (shouldSimplifyMotion()) return;
+    if (!window.matchMedia("(min-width: 64em)").matches) return; // the rail only exists on wide screens
 
     let cancelled = false;
     let kill: (() => void) | undefined;
@@ -31,8 +31,7 @@ export default function RouteRail() {
       .then(({ gsap, ScrollTrigger }) => {
         const fill = railFill.current;
         const lampEl = lamp.current;
-        const bar = barFill.current;
-        if (cancelled || !fill || !lampEl || !bar) return;
+        if (cancelled || !fill || !lampEl) return;
 
         const sections = stations
           .map((st) => document.getElementById(st.id))
@@ -41,7 +40,6 @@ export default function RouteRail() {
 
         const setFill = gsap.quickSetter(fill, "scaleY") as (v: number) => void;
         const setLamp = gsap.quickSetter(lampEl, "y", "px") as (v: number) => void;
-        const setBar = gsap.quickSetter(bar, "scaleX") as (v: number) => void;
 
         let tops: number[] = [];
         let trackHeight = 0;
@@ -66,7 +64,6 @@ export default function RouteRail() {
           }
           setFill(progress);
           setLamp(progress * trackHeight);
-          setBar(progress);
         };
 
         const trigger = ScrollTrigger.create({
@@ -96,7 +93,7 @@ export default function RouteRail() {
   return (
     <>
       <div className={s.bar} aria-hidden="true">
-        <span ref={barFill} className={s.barFill} />
+        <span className={s.barFill} />
       </div>
       <nav className={s.rail} aria-label="Journey route">
         <span className={s.track} aria-hidden="true">

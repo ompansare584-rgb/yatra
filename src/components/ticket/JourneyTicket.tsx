@@ -7,17 +7,10 @@ import s from "./JourneyTicket.module.scss";
 /**
  * The journey ticket: an original graphic identity card, NOT a reservation.
  * No PNR, seat, train number or booking reference appears anywhere on it.
+ * Its layout responds to the width of the space it is placed in (container query),
+ * so the text and the photo are never squeezed.
  */
 export default function JourneyTicket() {
-  const fields: Array<[string, string]> = [
-    ["Passenger", siteConfig.name],
-    ["Origin", siteConfig.city],
-    ["Current station", siteConfig.institutionShort],
-    ["Journey", siteConfig.field],
-    ["Destination", ticketCopy.destination],
-    ["Status", ticketCopy.status],
-    ["Identity", ticketCopy.identity],
-  ];
   const initials = siteConfig.name
     .split(" ")
     .map((part) => part[0])
@@ -33,18 +26,41 @@ export default function JourneyTicket() {
             यात्रा तिकीट
           </span>
         </p>
+
         <dl className={s.fields}>
-          {fields.map(([label, value]) => (
-            <div key={label} className={s.field}>
-              <dt>{label}</dt>
-              <dd>{value}</dd>
-            </div>
-          ))}
+          <div className={`${s.field} ${s.wide}`}>
+            <dt>Passenger</dt>
+            <dd className={s.name}>{siteConfig.name}</dd>
+          </div>
+          <div className={`${s.field} ${s.wide}`}>
+            <dt>Journey</dt>
+            <dd>{siteConfig.field}</dd>
+          </div>
+          <div className={s.field}>
+            <dt>Status</dt>
+            <dd>{ticketCopy.status}</dd>
+          </div>
+          <div className={s.field}>
+            <dt>Identity</dt>
+            <dd>{ticketCopy.identity}</dd>
+          </div>
         </dl>
-        {/* A rubber stamp: purely decorative. */}
-        <span className={s.stamp} lang="mr" aria-hidden="true">
-          यात्रा
-        </span>
+
+        {/* Origin -> current station -> destination, drawn as a little route. */}
+        <ol className={s.route} aria-label="Route">
+          <li>
+            <span className={s.routeLabel}>Origin</span>
+            <strong>{siteConfig.city}</strong>
+          </li>
+          <li className={s.here}>
+            <span className={s.routeLabel}>Current station</span>
+            <strong>{siteConfig.institutionShort}</strong>
+          </li>
+          <li>
+            <span className={s.routeLabel}>Destination</span>
+            <strong>{ticketCopy.destination}</strong>
+          </li>
+        </ol>
       </div>
 
       <div className={s.perforation} aria-hidden="true" />
@@ -57,7 +73,7 @@ export default function JourneyTicket() {
             alt={`Portrait of ${siteConfig.name}`}
             width={640}
             height={640}
-            sizes="(max-width: 48em) 96px, 140px"
+            sizes="(max-width: 34rem) 96px, 140px"
           />
         ) : (
           <span className={s.monogram} aria-hidden="true">
@@ -65,6 +81,10 @@ export default function JourneyTicket() {
           </span>
         )}
         <span className={s.bars} aria-hidden="true" />
+        {/* A rubber stamp: purely decorative. */}
+        <span className={s.stamp} lang="mr" aria-hidden="true">
+          यात्रा
+        </span>
       </div>
     </div>
   );

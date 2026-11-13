@@ -1,15 +1,15 @@
 import type { Viewport } from "next";
 import { Hind, Rozha_One, Special_Elite } from "next/font/google";
 import clsx from "clsx";
-import MotionProvider from "@/components/layout/MotionProvider";
+import SiteHeader from "@/components/layout/SiteHeader";
 import SmoothScroll from "@/components/layout/SmoothScroll";
-import Reveals from "@/components/layout/Reveals";
-import RouteRail from "@/components/navigation/RouteRail";
+import Footer from "@/components/sections/Footer";
 import { buildMetadata } from "@/lib/metadata";
 import "./globals.scss";
 
 // Fonts are self-hosted by next/font at build time. Only the display face carries Devanagari
-// (for the few Marathi details), so the body font downloads Latin only.
+// (for the few Marathi details), so the body font downloads Latin only. The typewriter face is
+// used for small labels only, so it is not preloaded (it never competes with the first paint).
 const rozha = Rozha_One({
   weight: "400",
   subsets: ["latin", "devanagari"],
@@ -26,6 +26,7 @@ const elite = Special_Elite({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-elite",
 });
 
@@ -45,13 +46,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <MotionProvider>
-          <RouteRail />
-          {children}
-        </MotionProvider>
-        {/* Effect-only components: they render nothing and only enhance the page after it is usable. */}
+        <SiteHeader />
+        {children}
+        <Footer />
+        {/* Effect-only: renders nothing, enhances scrolling on desktop after the page is usable. */}
         <SmoothScroll />
-        <Reveals />
       </body>
     </html>
   );

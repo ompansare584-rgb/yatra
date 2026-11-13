@@ -54,23 +54,14 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000,
   },
-  async rewrites() {
-    return {
-      // Optional content negotiation: `Accept: text/markdown` on "/" returns the
-      // Markdown version. Normal browser requests are unaffected.
-      beforeFiles: [
-        {
-          source: "/",
-          has: [{ type: "header", key: "accept", value: ".*text/markdown.*" }],
-          destination: "/md",
-        },
-      ],
-    };
-  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
-      { source: "/", headers: [{ key: "Vary", value: "Accept" }] },
+      {
+        // Our own static files are not fingerprinted, so cache them for a month (not "immutable").
+        source: "/:dir(textures|icons|images)/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
+      },
       {
         // Fingerprinted build assets never change, so they can be cached forever.
         source: "/_next/static/:path*",
